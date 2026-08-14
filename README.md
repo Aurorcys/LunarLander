@@ -2,13 +2,17 @@
 
 An end-to-end implementation of **Proximal Policy Optimization (PPO)** built **entirely from scratch using pure NumPy** — no PyTorch, no TensorFlow, no autograd libraries. 
 
-This repository implements manual forward/backward passes, an analytical Gaussian PPO loss derivation, Advantage Estimation (GAE), a custom Adam optimizer, and an H.264 video rendering pipeline inside Jupyter/Kaggle environments.
+This repository implements manual forward/backward passes, an analytical Gaussian PPO loss derivation, Advantage Estimation (GAE), a custom Adam optimizer, and H.264 video rendering pipeline inside Jupyter/Kaggle notebook environments.
 
 ---
 
 ## Agent Landing Showcase
 
+Below is the **Rank 4 Trained Actor (Episode 250)** performing a deterministic soft landing on the pad:
+
 ![Lunar Lander Landing Showcase](lunar_landing_rank4.gif)
+
+
 
 ---
 
@@ -23,22 +27,19 @@ This repository implements manual forward/backward passes, an analytical Gaussia
 
 ---
 
-## Performance & 50-Episode Stress Test
+## Performance & 100-Episode Stress Test
 
-The trained top-5 policy checkpoints were subjected to a rigorous **50-Episode Stress Test** to evaluate generalization across variable terrain, initial fuel vectors, and angular velocity perturbations.
+The trained top-5 policy checkpoints were subjected to a rigorous **100-Episode Stress Test** to evaluate generalization across variable terrain, initial fuel vectors, and angular velocity perturbations.
 
-| Rank | Ep | Mean Test Return | Max Return | Min Return | Solve Rate ($\ge 200$) | Crash Rate ($< 0$) |
+| Rank | Train Ep | Mean Test Return | Max Return | Min Return | Solve Rate ($\ge 200$) | Crash Rate |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Rank 1** | **490** | **$254.4 \pm 63.2$** | **313.6** | **10.1** | **92.0%** | **0.0%** |
-| **Rank 2** | **390** | **$254.6 \pm 55.7$** | **311.7** | **10.8** | **94.0%** | **0.0%** |
-| **Rank 3** | 330 | $232.0 \pm 80.3$ | 301.1 | $-54.8$ | 89.0% | 3.0% |
-| **Rank 4** | 210 | $209.6 \pm 91.5$ | 292.8 | $-40.3$ | 76.0% | 7.0% |
-| **Rank 5** | 470 | $252.8 \pm 69.0$ | 310.6 | $-197.6$ | 93.0% | 1.0% |
+| **Rank 1** | 490 | $240.7 \pm 77.4$ | 309.4 | 25.7 | 87.0% | 21.0% |
+| **Rank 2** ⭐ | **390** | **$252.6 \pm 55.1$** | **305.9** | **-6.6** | **94.0%** | **9.0%** |
+| **Rank 3** | 330 | $245.8 \pm 65.6$ | 308.3 | 3.1 | 91.0% | 22.0% |
+| **Rank 4** | 210 | $226.8 \pm 81.4$ | 304.2 | -58.4 | 87.0% | 16.0% |
+| **Rank 5** | 470 | $254.1 \pm 68.3$ | 311.0 | -48.7 | 92.0% | 16.0% |
 
-### Key Takeaways from Iteration 3:
-1. **Zero Crash Rate achieved**: Both **Rank 1** and **Rank 2** completed all 50 evaluation episodes without a single crash ($0.0\%$ crash rate).
-2. **High Solve Rate ($>92\%$)**: Ranks 1, 2, and 5 reliably scored above 200 points on almost every landing attempt.
-3. **Lowest Risk (Min Return $>0$)**: Rank 1 and Rank 2 never received a negative score, with minimum returns of $+10.1$ and $+10.8$ respectively.
+> **Key Takeaway**: **Rank 2 (Episode 390)** emerged as the most reliable policy, balancing the highest solve rate (**94.0%**) and lowest physical crash rate (**9.0%**).
 
 ---
 
